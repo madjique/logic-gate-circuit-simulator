@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -20,9 +21,9 @@ class Gate {
             type = typep ;
         }
         virtual bool calculate()  = 0 ;
-        virtual Gate& getGate()  = 0 ;
-        virtual Gate& getGate1() = 0 ;
-        virtual Gate& getGate2() = 0 ;
+        virtual Gate* getGate()  = 0 ;
+        virtual Gate* getGate1() = 0 ;
+        virtual Gate* getGate2() = 0 ;
         
         string getName(){
             return name ;
@@ -48,14 +49,14 @@ class InputGate : public Gate{
         bool calculate(){
             return value;
         }
-        Gate& getGate() {
-            return *this ;
+        Gate* getGate() {
+            return this ;
         } ;
-        Gate& getGate1() {
-            return *this ;
+        Gate* getGate1() {
+            return this ;
         };
-        Gate& getGate2() {
-            return *this ;
+        Gate* getGate2() {
+            return this ;
         } ;
 };
 
@@ -68,14 +69,14 @@ class OutputGate : public Gate{
         bool calculate(){
             return gate->calculate() ;
         }
-        Gate& getGate(){
-            return *gate ;
+        Gate* getGate(){
+            return gate ;
         }
-        Gate& getGate1() {
-            return *this ;
+        Gate* getGate1() {
+            return this ;
         };
-        Gate& getGate2() {
-            return *this ;
+        Gate* getGate2() {
+            return this ;
         } ;
         
 };
@@ -96,16 +97,16 @@ class LogicGate : public Gate {
         virtual bool calculate()  = 0 ;
         virtual void update()  = 0 ;
 
-        Gate& getGate(){
-            return *this ;
+        Gate* getGate(){
+            return this ;
         }
 
-        Gate& getGate1(){
-            return *gate1 ;
+        Gate* getGate1(){
+            return gate1 ;
         }
         
-        Gate& getGate2(){
-            return *gate2 ;
+        Gate* getGate2(){
+            return gate2 ;
         }
 
 };
@@ -189,62 +190,69 @@ class NxorGate : public LogicGate{
 };
 
 
-string GateToText(Gate& gate){
-    if (gate.getType() == 0 || gate.getType() == 1 )
-        return gate.getName() ;
-    else if (gate.getType() == 4)
-        return GateToText(gate.getGate()) ;
-    else if (gate.getType() == 2)
-        return gate.getName() + "(" + GateToText(gate.getGate1()) + ")" ;
-    else if (gate.getType() == 3)
-        return gate.getName() + "(" + GateToText(gate.getGate1()) + "," + GateToText(gate.getGate2()) + ")" ;
+string GateToText(Gate* gate){
+    if (gate->getType() == 0 || gate->getType() == 1 )
+        return gate->getName() ;
+    else if (gate->getType() == 4)
+        return GateToText(gate->getGate()) ;
+    else if (gate->getType() == 2)
+        return gate->getName() + "(" + GateToText(gate->getGate1()) + ")" ;
+    else if (gate->getType() == 3)
+        return gate->getName() + "(" + GateToText(gate->getGate1()) + "," + GateToText(gate->getGate2()) + ")" ;
 }
 
-Gate* TextToGate(string expression){
-
+string getGateNameFromText(string s){
+    string op = "" ;
+    for (auto it = s.cbegin() ; it != s.cend(); ++it) {
+        if (*it == '(')
+            break ;
+        else
+            op+= *it ;
+    } 
+    return op ;
 }
-// int findIndex(string str, int si, int ei)
-// {
-//     if (si > ei)
-//         return -1;
-//     stack<char> s;
-//     for (int i = si; i <= ei; i++) {
-//         if (str[i] == '(')
-//             s.push(str[i]);
-//         else if (str[i] == ')') {
-//             if (s.top() == '(') {
-//                 s.pop();
-//                 if (s.empty())
-//                     return i;
-//             }
-//         }
-//     }
-//     return -1;
-// }
 
-// Gate* treeFromString(string str, int si, int ei)
-// {
-//     // Base case
-//     if (si > ei)
-//         return NULL;
-//     // new root
-//     Gate* root = (str[si] - '0');
-//     int index = -1;
-//     // its complement ')'
-//     if (si + 1 <= ei && str[si + 1] == '(')
-//         index = findIndex(str, si + 1, ei);
-//     // if index found
-//     if (index != -1) {
-//         // call for left subtree
-//         root->left = treeFromString(str, si + 2, index - 1);
-//         // call for right subtree
-//         root->right
-//             = treeFromString(str, index + 2, ei - 1);
-//         return 
-//     }
-//     return getLogicGate( treeFromString(str, si + 2, index - 1));
-// }
+string getGateFirstMemberFromText(string s){
+    string member = "" ;
+    bool start = false ;
+    int parenthesis = 0 ;
+    for (auto it = s.cbegin() ; it != s.cend(); ++it) {
+        if (!start){
+            if (*it == '(') start = true ;
+        }
+        else{
+            if (*it == '(') parenthesis++ ;
+            else if  (*it == ')') parenthesis-- ;
+            else if (*it == ',' & parenthesis == 0)
+                break ;    
+            member+= *it ;
+        }
+    } 
+    //case only one member
+    if( parenthesis == -1 ) 
+        member[member.length()-1] = '\0';
+    return member ;
+}
 
+string getGateSecondMemberFromText(string s){
+    string member = "" ;
+    bool start = false ;
+    int parenthesis = 0 ;
+    for (auto it = s.rbegin() ; it != s.rend(); ++it) {
+        if (!start){
+            if (*it == ')') start = true ;
+        }
+        else{
+            if (*it == ')') parenthesis++ ;
+            else if  (*it == '(') parenthesis-- ;
+            else if (*it == ',' & parenthesis == 0)
+                break ;    
+            member+= *it ;
+        }
+    } 
+    reverse(member.begin(),member.end());
+    return member ;
+}
 
 Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
     if (str == "or") 
@@ -264,6 +272,31 @@ Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
     return nullptr ;
 }
 
+
+Gate* TextToGate(string expression){
+    if (expression.length() == 1)
+        return new InputGate(expression);
+    else {
+        string operation = getGateNameFromText(expression) ;
+        string firstMember = getGateFirstMemberFromText(expression);
+        if (operation == "negate")
+            return getLogicGate(operation,TextToGate(firstMember),NULL);
+        else{
+            string secondtMember = getGateSecondMemberFromText(expression);
+            return getLogicGate(operation,TextToGate(firstMember),TextToGate(secondtMember));
+        }
+    }
+}
+
+// void Simulation(){
+//     int end = 0 ;
+//     while(!end)
+//     {
+//         cin >> end ;
+//     }
+// }
+
+
 // void TextToFile(string expression){
 
 // }
@@ -282,14 +315,17 @@ int main(){
     //  Exemple de sujet 
     InputGate *a = new InputGate ("a");
     InputGate *b = new InputGate ("b");
-    Gate * or1 = new OrGate (a,b);
+    Gate * or1 = new OrGate(a,b);
+    Gate * or2 = new OrGate(a,or1);
     Gate * and1 = new AndGate (a,b);
-    Gate * and2 = new XorGate (or1 , and1 );
+    Gate * and2 = new XorGate (or2 , and1 );
     OutputGate *A = new OutputGate ( and2 );
     a->setValue(true);
     b->setValue(true);
-    cout << GateToText(*A) << endl ;
-    cout << A->calculate() << endl ;  
+    string text =  GateToText(A)  ;
+    cout << text << endl ;
+    cout << GateToText(TextToGate(text)) << endl ; 
+
     // Mon exemple
     // InputGate a("a");
     // InputGate b("b");
