@@ -7,6 +7,7 @@ class Gate {
     protected:
         int type = 0 ;
         string name = "default";
+        bool value = 0 ;
         // 0  : default
         // 1  : Input Gate
         // 2  : 1arg Gate
@@ -29,13 +30,14 @@ class Gate {
         int getType(){
             return type ;
         }
+        bool getValue(){
+            return value ;
+        }
 
 };
 
 
 class InputGate : public Gate{
-    private :
-        bool value = 0 ;
     public : 
         InputGate(string namep):Gate(1){
             name = namep ;
@@ -92,6 +94,7 @@ class LogicGate : public Gate {
             gate1 = gate1p ;
         }
         virtual bool calculate()  = 0 ;
+        virtual void update()  = 0 ;
 
         Gate& getGate(){
             return *this ;
@@ -113,6 +116,9 @@ class NeGate : public LogicGate{
         bool calculate(){
             return (!gate1->calculate()) ;
         }
+        void update(){
+            value = !gate1->getValue() ;
+        }
 };
 
 class OrGate : public LogicGate{
@@ -121,6 +127,9 @@ class OrGate : public LogicGate{
         bool calculate(){
             return (gate1->calculate() | gate2->calculate()) ;
         }
+        void update(){
+            value = gate1->getValue() | gate2->getValue() ;
+        }
 };
 
 class NorGate : public LogicGate{
@@ -128,6 +137,9 @@ class NorGate : public LogicGate{
         NorGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){ name = "nor"; };
         bool calculate(){
             return !(gate1->calculate() | gate2->calculate()) ;
+        }
+        void update(){
+            value = !(gate1->getValue() | gate2->getValue()) ;
         }
 };
 
@@ -138,6 +150,9 @@ class AndGate : public LogicGate{
         bool calculate(){
             return (gate1->calculate() & gate2->calculate()) ;
         }
+        void update(){
+            value = (gate1->getValue() & gate2->getValue()) ;
+        }
 };
 
 class NandGate : public LogicGate{
@@ -145,6 +160,9 @@ class NandGate : public LogicGate{
         NandGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){ name = "nand"; };
         bool calculate(){
             return !(gate1->calculate() & gate2->calculate()) ;
+        }
+        void update(){
+            value = !(gate1->getValue() & gate2->getValue()) ;
         }
 };
 
@@ -154,6 +172,9 @@ class XorGate : public LogicGate{
         bool calculate(){
             return (gate1->calculate() ^ gate2->calculate()) ;
         }
+        void update(){
+            value = (gate1->getValue() ^ gate2->getValue()) ;
+        }
 };
 
 class NxorGate : public LogicGate{
@@ -161,6 +182,9 @@ class NxorGate : public LogicGate{
         NxorGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){ name = "nxor"; };
         bool calculate(){
             return !(gate1->calculate() ^ gate2->calculate()) ;
+        }
+        void update(){
+            value = !(gate1->getValue() ^ gate2->getValue()) ;
         }
 };
 
@@ -176,9 +200,7 @@ string GateToText(Gate& gate){
         return gate.getName() + "(" + GateToText(gate.getGate1()) + "," + GateToText(gate.getGate2()) + ")" ;
 }
 
-
-Gate& TextToGate(string expression){
-
+Gate* TextToGate(string expression){
 
 }
 
