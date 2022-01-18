@@ -55,8 +55,19 @@ class LogicGate : public Gate {
         LogicGate(Gate* gate1p,Gate* gate2p ):Gate(2){
             gate1 = gate1p ;
             gate2 = gate2p ;
+        } 
+        LogicGate(Gate* gate1p ):Gate(2){
+            gate1 = gate1p ;
         }
         virtual bool calculate()  = 0 ;
+};
+
+class NeGate : public LogicGate{
+    public : 
+        NeGate(Gate* gate1p):LogicGate(gate1p){};
+        bool calculate(){
+            return (!gate1->calculate()) ;
+        }
 };
 
 class OrGate : public LogicGate{
@@ -64,6 +75,14 @@ class OrGate : public LogicGate{
         OrGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){};
         bool calculate(){
             return (gate1->calculate() | gate2->calculate()) ;
+        }
+};
+
+class NorGate : public LogicGate{
+    public : 
+        NorGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){};
+        bool calculate(){
+            return !(gate1->calculate() | gate2->calculate()) ;
         }
 };
 
@@ -76,12 +95,27 @@ class AndGate : public LogicGate{
         }
 };
 
+class NandGate : public LogicGate{
+    public : 
+        NandGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){};
+        bool calculate(){
+            return !(gate1->calculate() & gate2->calculate()) ;
+        }
+};
 
 class XorGate : public LogicGate{
     public : 
         XorGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){};
         bool calculate(){
             return (gate1->calculate() ^ gate2->calculate()) ;
+        }
+};
+
+class NxorGate : public LogicGate{
+    public : 
+        NxorGate(Gate* gate1p,Gate* gate2p):LogicGate(gate1p,gate2p){};
+        bool calculate(){
+            return !(gate1->calculate() ^ gate2->calculate()) ;
         }
 };
 
