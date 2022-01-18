@@ -119,6 +119,24 @@ class NxorGate : public LogicGate{
         }
 };
 
+
+void TextShow(Gate& gate){
+
+}
+
+
+void TextToFile(string gate){
+
+}
+
+Gate TextBuild(string expression){
+
+}
+
+void Draw(OutputGate& gate){
+    
+}
+
 int main(){
     cout << "Test" << endl ;
     
