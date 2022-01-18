@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -289,22 +290,32 @@ Gate* TextToGate(string expression){
     }
 }
 
-// void Simulation(){
-//     int end = 0 ;
-//     while(!end)
-//     {
-//         cin >> end ;
-//     }
-// }
+void Simulation(){
+    int end = 0 ;
+    while(!end)
+    {
+        cin >> end ;
+    }
+}
 
+void TextToFile(string expression){
+    ofstream myfile;
+    myfile.open ("example.txt");
+    myfile << expression + "\n";
+    myfile.close();
+}
 
-// void TextToFile(string expression){
-
-// }
-
-// string FileToText(string filename){
-
-// }
+string FileToText(string filename){
+    string line = "";
+    ifstream myfile (filename);
+    if (myfile.is_open()) {
+        getline (myfile,line) ;
+        myfile.close();
+        return line ;
+    }
+    else cout << "Umpossible d'ouvrir le fichier"; 
+    return line ;
+}
 
 // void Draw(OutputGate* gate){
     
