@@ -230,7 +230,7 @@ string getGateFirstMemberFromText(string s){
     } 
     //case only one member
     if( parenthesis == -1 ) 
-        member[member.length()-1] = '\0';
+        member.pop_back();
     return member ;
 }
 
@@ -274,13 +274,14 @@ Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
 
 
 Gate* TextToGate(string expression){
-    if (expression.length() == 1)
+    if (expression.length() <= 1)
         return new InputGate(expression);
     else {
         string operation = getGateNameFromText(expression) ;
         string firstMember = getGateFirstMemberFromText(expression);
-        if (operation == "negate")
+        if (operation == "negate"){
             return getLogicGate(operation,TextToGate(firstMember),NULL);
+        }
         else{
             string secondtMember = getGateSecondMemberFromText(expression);
             return getLogicGate(operation,TextToGate(firstMember),TextToGate(secondtMember));
@@ -315,8 +316,8 @@ int main(){
     //  Exemple de sujet 
     InputGate *a = new InputGate ("a");
     InputGate *b = new InputGate ("b");
-    Gate * or1 = new OrGate(a,b);
-    Gate * or2 = new OrGate(a,or1);
+    Gate * or1 = new NeGate(a);
+    Gate * or2 = new OrGate(or1,b);
     Gate * and1 = new AndGate (a,b);
     Gate * and2 = new XorGate (or2 , and1 );
     OutputGate *A = new OutputGate ( and2 );
