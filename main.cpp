@@ -203,10 +203,48 @@ string GateToText(Gate& gate){
 Gate* TextToGate(string expression){
 
 }
+// int findIndex(string str, int si, int ei)
+// {
+//     if (si > ei)
+//         return -1;
+//     stack<char> s;
+//     for (int i = si; i <= ei; i++) {
+//         if (str[i] == '(')
+//             s.push(str[i]);
+//         else if (str[i] == ')') {
+//             if (s.top() == '(') {
+//                 s.pop();
+//                 if (s.empty())
+//                     return i;
+//             }
+//         }
+//     }
+//     return -1;
+// }
 
-Gate* getLogicGate(string str,Gate* gate){
-    return new NeGate(gate) ;
-}
+// Gate* treeFromString(string str, int si, int ei)
+// {
+//     // Base case
+//     if (si > ei)
+//         return NULL;
+//     // new root
+//     Gate* root = (str[si] - '0');
+//     int index = -1;
+//     // its complement ')'
+//     if (si + 1 <= ei && str[si + 1] == '(')
+//         index = findIndex(str, si + 1, ei);
+//     // if index found
+//     if (index != -1) {
+//         // call for left subtree
+//         root->left = treeFromString(str, si + 2, index - 1);
+//         // call for right subtree
+//         root->right
+//             = treeFromString(str, index + 2, ei - 1);
+//         return 
+//     }
+//     return getLogicGate( treeFromString(str, si + 2, index - 1));
+// }
+
 
 Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
     if (str == "or") 
@@ -221,18 +259,20 @@ Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
             return  new XorGate(gate1,gate2);
     else if (str == "nxor" ) 
             return  new NxorGate(gate1,gate2);
+    else if (str == "negate" ) 
+            return  new NeGate(gate1);
     return nullptr ;
 }
 
-// void TextToFile(string gate){
+// void TextToFile(string expression){
 
 // }
 
-// Gate TextToGate(string expression){
+// string FileToText(string filename){
 
 // }
 
-// void Draw(OutputGate& gate){
+// void Draw(OutputGate* gate){
     
 // }
 
@@ -246,10 +286,10 @@ int main(){
     Gate * and1 = new AndGate (a,b);
     Gate * and2 = new XorGate (or1 , and1 );
     OutputGate *A = new OutputGate ( and2 );
-    a->setValue(false);
+    a->setValue(true);
     b->setValue(true);
     cout << GateToText(*A) << endl ;
-
+    cout << A->calculate() << endl ;  
     // Mon exemple
     // InputGate a("a");
     // InputGate b("b");
