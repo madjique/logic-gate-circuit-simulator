@@ -177,10 +177,30 @@ string GateToText(Gate& gate){
 }
 
 
-// Gate TextToGate(string expression){
+Gate& TextToGate(string expression){
 
-// }
 
+}
+
+Gate* getLogicGate(string str,Gate* gate){
+    return new NeGate(gate) ;
+}
+
+Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
+    if (str == "or") 
+            return new OrGate(gate1,gate2);
+    else if (str == "and" )
+            return new AndGate(gate1,gate2);
+    else if (str == "nor" )
+            return new NorGate(gate1,gate2);
+    else if (str == "nand" ) 
+            return new NandGate(gate1,gate2);
+    else if (str == "xor" ) 
+            return  new XorGate(gate1,gate2);
+    else if (str == "nxor" ) 
+            return  new NxorGate(gate1,gate2);
+    return nullptr ;
+}
 
 // void TextToFile(string gate){
 
