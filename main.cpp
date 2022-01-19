@@ -346,7 +346,7 @@ int main(){
     cout << text << endl ;
     cout << GateToText(TextToGate(text)) << endl ; 
     // clear cache of input Instances
-    outputGates.clear()
+    outputGates.clear();
 
     // Mon exemple
     // InputGate a("a");
