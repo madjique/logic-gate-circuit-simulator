@@ -32,9 +32,15 @@ class Gate {
         string getName(){
             return name ;
         }
+
         int getType(){
             return type ;
         }
+        
+        void reset(){
+            value = 0;
+        }
+
         bool getValue(){
             return value ;
         }
@@ -45,6 +51,12 @@ void SimulationWait(){
     string cmd ;
     cout << "type anything to continue the simulation" << endl ;
     cin >> cmd ;
+}
+
+// TODO : SHOW the state with the currect value from the sub tree that Gate comes from
+void DrawSimulation(Gate* gate){
+    //SimulationWait() ;
+    cout << "Drawing" << endl ;
 }
 
 // TODO : SHOW the state with the currect value from the sub tree that Gate comes from
@@ -67,7 +79,7 @@ class InputGate : public Gate{
            
         }
         void simulate(){
-            Draw(this);
+            DrawSimulation(this);
         }
         Gate* getGate() {
             return this ;
@@ -95,8 +107,14 @@ class OutputGate : public Gate{
         void simulate(){
             gate->update();
             gate->simulate();
-            //Draw(this);
+            //DrawSimulation(this);
         }
+
+        void reset(){
+            value = 0 ;
+            gate->reset();
+        }
+
         Gate* getGate(){
             return gate ;
         }
@@ -132,8 +150,15 @@ class LogicGate : public Gate {
                 gate2->simulate();
             }
             update();
-            Draw(this);
+            DrawSimulation(this);
         }
+        void reset(){
+            value = 0 ;
+            gate1->reset();
+            if(type == 3)
+                gate2->reset();
+        }
+
         Gate* getGate(){
             return this ;
         }
@@ -347,7 +372,6 @@ void Simulation(OutputGate* gate){
         else{
             gate->simulate() ;
         }
-
     }
 }
 
@@ -389,6 +413,8 @@ int main(){
     Simulation(A);
     // clear cache of input Instances
     inputGates.clear();
+
+    A->reset();
 
     // Mon exemple
     // InputGate a("a");
