@@ -26,6 +26,7 @@
         "utility": "cpp",
         "string": "cpp",
         "new": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "fstream": "cpp"
     }
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -273,10 +274,17 @@ Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
     return nullptr ;
 }
 
+map<string,InputGate*> outputGates;
+
+InputGate* getRightInput(string letter){
+    if(!outputGates.count(letter))
+        outputGates.insert({letter,new InputGate(letter)});
+    return outputGates.at(letter) ;
+}
 
 Gate* TextToGate(string expression){
     if (expression.length() <= 1)
-        return new InputGate(expression);
+        return getRightInput(expression);
     else {
         string operation = getGateNameFromText(expression) ;
         string firstMember = getGateFirstMemberFromText(expression);
@@ -337,6 +345,8 @@ int main(){
     string text =  GateToText(A)  ;
     cout << text << endl ;
     cout << GateToText(TextToGate(text)) << endl ; 
+    // clear cache of input Instances
+    outputGates.clear()
 
     // Mon exemple
     // InputGate a("a");
