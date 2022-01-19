@@ -26,7 +26,9 @@ class Gate {
         virtual Gate* getGate()  = 0 ;
         virtual Gate* getGate1() = 0 ;
         virtual Gate* getGate2() = 0 ;
-        
+        virtual void simulate() = 0 ;
+        virtual void update()  = 0 ;
+
         string getName(){
             return name ;
         }
@@ -39,7 +41,10 @@ class Gate {
 
 };
 
-
+// TODO : SHOW the state with the currect value from the sub tree that Gate comes from
+void Draw(Gate* gate){
+    cout << "Drawing" << endl ;
+}
 class InputGate : public Gate{
     public : 
         InputGate(string namep):Gate(1){
@@ -50,6 +55,12 @@ class InputGate : public Gate{
         }
         bool calculate(){
             return value;
+        }
+        void update(){
+           
+        }
+        void simulate(){
+            Draw(this);
         }
         Gate* getGate() {
             return this ;
@@ -70,6 +81,14 @@ class OutputGate : public Gate{
         }
         bool calculate(){
             return gate->calculate() ;
+        }
+        void update(){
+            value = gate->getValue() ;
+        }
+        void simulate(){
+            gate->update();
+            gate->simulate();
+            //Draw(this);
         }
         Gate* getGate(){
             return gate ;
@@ -98,7 +117,16 @@ class LogicGate : public Gate {
         }
         virtual bool calculate()  = 0 ;
         virtual void update()  = 0 ;
-
+        void simulate(){
+            gate1->update();
+            gate1->simulate();
+            if(gate2 != nullptr){
+                gate2->update();
+                gate2->simulate();
+            }
+            update();
+            Draw(this);
+        }
         Gate* getGate(){
             return this ;
         }
@@ -300,11 +328,19 @@ Gate* TextToGate(string expression){
     }
 }
 
-void Simulation(){
-    int end = 0 ;
-    while(!end)
+void Simulation(OutputGate gate){
+    string cmd ;
+    while(true)
     {
-        cin >> end ;
+        cout << "type 'continue' to end the simulation" << endl ;
+        cout << "type 'stop' to end the simulation" << endl ;
+        cin >> cmd ;
+        if (cmd == "stop")
+            break ;
+        else{
+            gate.simulate() ;
+        }
+
     }
 }
 
@@ -326,10 +362,6 @@ string FileToText(string filename){
     else cout << "Umpossible d'ouvrir le fichier"; 
     return line ;
 }
-
-// void Draw(OutputGate* gate){
-    
-// }
 
 int main(){
     cout << "Test" << endl ;
