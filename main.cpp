@@ -55,7 +55,7 @@ void SimulationWait(){
 
 // TODO : SHOW the state with the currect value from the sub tree that Gate comes from
 void DrawSimulation(Gate* gate){
-    //SimulationWait() ;
+    SimulationWait() ;
     cout << "Drawing" << endl ;
 }
 
