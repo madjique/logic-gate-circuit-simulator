@@ -274,17 +274,19 @@ Gate* getLogicGate(string str,Gate* gate1,Gate* gate2){
     return nullptr ;
 }
 
-map<string,InputGate*> outputGates;
+// Global variable
+// can make it static in InputGate class but we dont really need to do that
+map<string,InputGate*> inputGates;
 
-InputGate* getRightInput(string letter){
-    if(!outputGates.count(letter))
-        outputGates.insert({letter,new InputGate(letter)});
-    return outputGates.at(letter) ;
+InputGate* getInputInstance(string letter){
+    if(!inputGates.count(letter))
+        inputGates.insert({letter,new InputGate(letter)});
+    return inputGates.at(letter) ;
 }
 
 Gate* TextToGate(string expression){
     if (expression.length() <= 1)
-        return getRightInput(expression);
+        return getInputInstance(expression);
     else {
         string operation = getGateNameFromText(expression) ;
         string firstMember = getGateFirstMemberFromText(expression);
@@ -346,7 +348,7 @@ int main(){
     cout << text << endl ;
     cout << GateToText(TextToGate(text)) << endl ; 
     // clear cache of input Instances
-    outputGates.clear();
+    inputGates.clear();
 
     // Mon exemple
     // InputGate a("a");
