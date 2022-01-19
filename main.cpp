@@ -41,8 +41,15 @@ class Gate {
 
 };
 
+void SimulationWait(){
+    string cmd ;
+    cout << "type anything to continue the simulation" << endl ;
+    cin >> cmd ;
+}
+
 // TODO : SHOW the state with the currect value from the sub tree that Gate comes from
 void Draw(Gate* gate){
+    SimulationWait() ;
     cout << "Drawing" << endl ;
 }
 class InputGate : public Gate{
@@ -120,7 +127,7 @@ class LogicGate : public Gate {
         void simulate(){
             gate1->update();
             gate1->simulate();
-            if(gate2 != nullptr){
+            if(type == 3){
                 gate2->update();
                 gate2->simulate();
             }
@@ -328,17 +335,17 @@ Gate* TextToGate(string expression){
     }
 }
 
-void Simulation(OutputGate gate){
+void Simulation(OutputGate* gate){
     string cmd ;
     while(true)
     {
-        cout << "type 'continue' to end the simulation" << endl ;
+        cout << "type anything to start the simulation" << endl ;
         cout << "type 'stop' to end the simulation" << endl ;
         cin >> cmd ;
         if (cmd == "stop")
             break ;
         else{
-            gate.simulate() ;
+            gate->simulate() ;
         }
 
     }
@@ -378,7 +385,8 @@ int main(){
     b->setValue(true);
     string text =  GateToText(A)  ;
     cout << text << endl ;
-    cout << GateToText(TextToGate(text)) << endl ; 
+    cout << GateToText(TextToGate(text)) << endl ;
+    Simulation(A);
     // clear cache of input Instances
     inputGates.clear();
 
