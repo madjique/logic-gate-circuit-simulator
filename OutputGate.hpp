@@ -1,10 +1,12 @@
+#ifndef OUTPUTGATE
+#define OUTPUTGATE
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
 #include <bits/stdc++.h>
 #include "Gate.hpp"
-#include "Utils.hpp"
 
 using namespace std;
 
@@ -21,3 +23,5 @@ class OutputGate : public Gate{
         Gate* getGate1();
         Gate* getGate2();
 };
+
+#endif

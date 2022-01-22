@@ -1,13 +1,16 @@
+#ifndef LOGICGATE
+#define LOGICGATE
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
 #include <bits/stdc++.h>
+
 #include "Gate.hpp"
 #include "Utils.hpp"
 
 using namespace std;
-
 
 class LogicGate : public Gate {
     protected :
@@ -76,3 +79,5 @@ class NxorGate : public LogicGate{
         bool calculate();
         void update();
 };
+
+#endif

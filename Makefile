@@ -1,9 +1,9 @@
-CPP=g++ --std=c++11
+CPP=g++ --std=c++17
 CFLAGS= -Wall
 
 all : exec
 
-exec : main.o Gate.o InputGate.o OutputGate.o LogicGate.o
+exec : main.o Gate.o InputGate.o OutputGate.o LogicGate.o Utils.o
 	$(CPP) $(CFLAGS) -o $@ $^
 
 main.o : main.cpp 
@@ -19,6 +19,9 @@ OutputGate.o : OutputGate.cpp OutputGate.hpp
 	$(CPP) $(CFLAGS) -c $<
 
 LogicGate.o : LogicGate.cpp LogicGate.hpp
+	$(CPP) $(CFLAGS) -c $<
+
+Utils.o : Utils.cpp Utils.hpp
 	$(CPP) $(CFLAGS) -c $<
 
 clean :

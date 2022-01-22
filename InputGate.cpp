@@ -3,7 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <bits/stdc++.h>
-#include "Gate.hpp"
+
 #include "Utils.hpp"
 #include "InputGate.hpp"
 

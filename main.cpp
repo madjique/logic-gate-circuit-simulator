@@ -3,10 +3,11 @@
 #include <fstream>
 #include <vector>
 #include <bits/stdc++.h>
+
 #include "Gate.hpp"
 #include "Utils.hpp"
-#include "OutputGate.hpp"
 #include "InputGate.hpp"
+#include "OutputGate.hpp"
 #include "LogicGate.hpp"
 
 using namespace std;

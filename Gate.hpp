@@ -1,3 +1,6 @@
+#ifndef GATE
+#define GATE
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -5,7 +8,6 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
 
 class Gate {
     protected:
@@ -20,7 +22,7 @@ class Gate {
         string name = "default";
         bool value = 0 ;
     public :
-        Gate(){}
+        Gate();
         Gate(int typep);
         virtual bool calculate()  = 0 ;
         virtual void simulate() = 0 ;
@@ -33,3 +35,5 @@ class Gate {
         virtual Gate* getGate1() = 0 ;
         virtual Gate* getGate2() = 0 ;
 };
+
+#endif

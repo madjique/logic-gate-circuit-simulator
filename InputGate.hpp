@@ -1,3 +1,6 @@
+#ifndef INPUTGATE
+#define INPUTGATE
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -19,3 +22,5 @@ class InputGate : public Gate{
         Gate* getGate1();
         Gate* getGate2();
 };
+
+#endif
