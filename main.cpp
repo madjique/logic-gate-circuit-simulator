@@ -27,7 +27,7 @@ void draw(Gate *gate, int positionY, int positionX)
     {
         move(positionY, positionX);
         // printw(gate->getName().data());
-        printw("%d", gate->getValue() ? 1 : 0);
+        printw(gate->getValue() ? "++" : "**");
         move(positionY - 1, positionX);
         printw("|");
         move(positionY - 2, positionX - 1);
@@ -36,50 +36,64 @@ void draw(Gate *gate, int positionY, int positionX)
     }
     else if (gate->getType() == 3)
     {
-        move(positionY, positionX - 3);
+        move(positionY, positionX - 1);
         printw("|");
-        move(positionY, positionX + 3);
-        printw("|");
-
-        move(positionY - 1, positionX - 4);
-        printw("%d", gate->getGate1()->getValue() ? 1 : 0);
-        move(positionY - 1, positionX + 4);
-        printw("%d", gate->getGate2()->getValue() ? 1 : 0);
-
-        move(positionY - 2, positionX - 5);
-        printw("|");
-        move(positionY - 2, positionX + 5);
+        move(positionY, positionX + 1);
         printw("|");
 
-        move(positionY - 3, positionX - 5);
-        printw(toUpper(gate->getGate1()->getName()).data());
-        move(positionY - 3, positionX + 5);
-        printw(toUpper(gate->getGate2()->getName()).data());
-        draw(gate->getGate1(), positionY - 4, positionX - 6);
-        draw(gate->getGate2(), positionY - 4, positionX + 6);
+        move(positionY - 1, positionX - 2);
+        printw(gate->getGate1()->getValue() ? "++" : "**");
+        move(positionY - 1, positionX + 1);
+        printw(gate->getGate2()->getValue() ? "++" : "**");
+
+        move(positionY - 2, positionX - 2);
+        printw("|");
+        move(positionY - 2, positionX + 2);
+        printw("|");
+
+        if (gate->getGate1()->getType() != 1)
+        {
+            move(positionY - 3, positionX - 3);
+            printw(toUpper(gate->getGate1()->getName()).data());
+            draw(gate->getGate1(), positionY - 4, positionX - 3);
+        }
+        else
+        {
+            draw(gate->getGate1(), positionY - 3, positionX - 2);
+        }
+        if (gate->getGate2()->getType() != 1)
+        {
+            move(positionY - 3, positionX + 2);
+            printw(toUpper(gate->getGate2()->getName()).data());
+            draw(gate->getGate2(), positionY - 4, positionX + 3);
+        }
+        else
+        {
+            draw(gate->getGate2(), positionY - 3, positionX + 2);
+        }
     }
     else if (gate->getType() == 2)
     {
         move(positionY, positionX);
         printw("|");
         move(positionY - 1, positionX);
-        printw("%d", gate->getGate1()->getValue() ? 1 : 0);
+        printw(gate->getGate1()->getValue() ? "++" : "**");
         move(positionY - 2, positionX);
         printw("|");
         move(positionY - 3, positionX);
         printw(toUpper(gate->getGate1()->getName()).data());
     }
-    // int x = 0;
-    // int y = 0;
-    // move(INITIAL_Y - y, INITIAL_X - x);
-    // y += 1;
-    // printw(gate->getName().data());
-    // move(INITIAL_Y - y, INITIAL_X - x);
-    // printw("|");
-    // y += 1;
-    // x += 1;
-    // move(INITIAL_Y - y, INITIAL_X - x);
-    // printw(gate->getGate()->getName().data());
+    else if (gate->getType() == 1)
+    {
+        move(positionY, positionX);
+        // printw("|");
+        // move(positionY - 1, positionX);
+        // printw(gate->getGate1()->getValue() ? "++" : "**");
+        // move(positionY - 2, positionX);
+        // printw("|");
+        // move(positionY - 3, positionX);
+        printw(toUpper(gate->getName()).data());
+    }
 }
 
 int main()
@@ -89,18 +103,23 @@ int main()
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
     int INITIAL_X = xMax / 2;
-    int INITIAL_Y = yMax / 2;
+    int INITIAL_Y = yMax - 5;
 
     //  Exemple de sujet
     InputGate *a = new InputGate("a");
     InputGate *b = new InputGate("b");
-    Gate *or1 = new NeGate(a);
-    Gate *or2 = new OrGate(or1, b);
-    Gate *and1 = new AndGate(a, b);
-    Gate *and2 = new XorGate(or2, and1);
-    OutputGate *A = new OutputGate(and2, "A");
+    InputGate *d = new InputGate("d");
+
+    // Gate *or1 = new NeGate(a);
+    Gate *or2 = new OrGate(a, b);
+    Gate *nand = new NandGate(or2, d);
+    // Gate *and1 = new AndGate(a, b);
+    // Gate *and2 = new XorGate(or2, and1);
+    OutputGate *A = new OutputGate(nand, "A");
     a->setValue(true);
     b->setValue(false);
+    d->setValue(true);
+    A->calculate();
     string text = Utils::GateToText(A);
     printw(text.data());
     // printw(Utils::GateToText(Utils::TextToGate(text)).data());
