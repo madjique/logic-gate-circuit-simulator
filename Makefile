@@ -1,4 +1,4 @@
-CPP=g++ --std=c++17
+CPP=g++ -lncurses --std=c++17
 CFLAGS= -Wall
 
 all : exec
