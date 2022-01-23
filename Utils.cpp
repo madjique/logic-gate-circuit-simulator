@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <bits/stdc++.h>
+#include <ncurses.h>
 
 #include "Gate.hpp"
 #include "InputGate.hpp"
@@ -15,6 +16,14 @@ using namespace std;
 
 //init static variable
 map<string, InputGate *> Utils::inputGates = map<string, InputGate *>();
+
+string Utils::toUpper(string data)
+{
+    string s = data;
+    for_each(s.begin(), s.end(), [](char &c)
+             { c = ::toupper(c); });
+    return s;
+}
 
 void Utils::SimulationWait()
 {
@@ -30,11 +39,78 @@ void Utils::DrawSimulation(Gate *gate)
     cout << "Drawing" << endl;
 }
 
-// TODO : SHOW the state with the currect value from the sub tree that Gate comes from
-void Utils::Draw(Gate *gate)
+void Utils::Draw(Gate *gate, int positionY, int positionX)
 {
-    SimulationWait();
-    cout << "Drawing" << endl;
+    if (gate->getType() == 4)
+    {
+        Utils::Draw(gate->getGate(), positionY - 3, positionX);
+        gate->getGate()->update();
+        move(positionY, positionX);
+        // printw(gate->getName().data());
+        printw(gate->getGate()->getValue() ? "++" : "**");
+        move(positionY - 1, positionX);
+        printw("|");
+        move(positionY - 2, positionX - 1);
+        printw(Utils::toUpper(gate->getGate()->getName()).data());
+    }
+    else if (gate->getType() == 3)
+    {
+
+        if (gate->getGate1()->getType() != 1)
+        {
+            Utils::Draw(gate->getGate1(), positionY - 4, positionX - 3);
+            move(positionY - 3, positionX - 3);
+            printw(Utils::toUpper(gate->getGate1()->getName()).data());
+        }
+        else
+        {
+            Utils::Draw(gate->getGate1(), positionY - 3, positionX - 2);
+        }
+        if (gate->getGate2()->getType() != 1)
+        {
+            Utils::Draw(gate->getGate2(), positionY - 4, positionX + 3);
+            move(positionY - 3, positionX + 2);
+            printw(Utils::toUpper(gate->getGate2()->getName()).data());
+        }
+        else
+        {
+            Utils::Draw(gate->getGate2(), positionY - 3, positionX + 2);
+        }
+
+        move(positionY, positionX - 1);
+        printw("|");
+        move(positionY, positionX + 1);
+        printw("|");
+
+        move(positionY - 1, positionX - 2);
+        gate->getGate1()->update();
+        printw(gate->getGate1()->getValue() ? "++" : "**");
+        gate->getGate2()->update();
+        move(positionY - 1, positionX + 1);
+        printw(gate->getGate2()->getValue() ? "++" : "**");
+
+        move(positionY - 2, positionX - 2);
+        printw("|");
+        move(positionY - 2, positionX + 2);
+        printw("|");
+    }
+    else if (gate->getType() == 2)
+    {
+        move(positionY, positionX);
+        printw("|");
+        move(positionY - 1, positionX);
+        gate->getGate1()->update();
+        printw(gate->getGate1()->getValue() ? "++" : "**");
+        move(positionY - 2, positionX);
+        printw("|");
+        move(positionY - 3, positionX);
+        printw(Utils::toUpper(gate->getGate1()->getName()).data());
+    }
+    else if (gate->getType() == 1)
+    {
+        move(positionY, positionX);
+        printw(Utils::toUpper(gate->getName()).data());
+    }
 }
 
 string Utils::GateToText(Gate *gate)

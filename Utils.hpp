@@ -12,27 +12,26 @@
 #include "OutputGate.hpp"
 #include "LogicGate.hpp"
 
-class Utils{
-    
-public :
+class Utils
+{
 
-static map<string,InputGate*> inputGates ;
+public:
+    static map<string, InputGate *> inputGates;
 
-static void SimulationWait();
-static void DrawSimulation(Gate* gate);
-static void Draw(Gate* gate);
-static string GateToText(Gate* gate);
-static string getGateNameFromText(string s);
-static string getGateFirstMemberFromText(string s);
-static string getGateSecondMemberFromText(string s);
-static Gate* getLogicGate(string str,Gate* gate1,Gate* gate2);
-static InputGate* getInputInstance(string letter);
-static Gate* TextToGate(string expression);
-static void Simulation(OutputGate* gate);
-static void TextToFile(string expression);
-static string FileToText(string filename);
-
+    static void SimulationWait();
+    static void DrawSimulation(Gate *gate);
+    static void Draw(Gate *gate, int positionY, int positionX);
+    static string GateToText(Gate *gate);
+    static string getGateNameFromText(string s);
+    static string getGateFirstMemberFromText(string s);
+    static string getGateSecondMemberFromText(string s);
+    static Gate *getLogicGate(string str, Gate *gate1, Gate *gate2);
+    static InputGate *getInputInstance(string letter);
+    static Gate *TextToGate(string expression);
+    static void Simulation(OutputGate *gate);
+    static void TextToFile(string expression);
+    static string FileToText(string filename);
+    static string toUpper(string data);
 };
-
 
 #endif /* UTILS */
