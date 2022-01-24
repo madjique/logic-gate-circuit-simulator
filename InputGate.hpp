@@ -18,6 +18,8 @@ class InputGate : public Gate{
         bool calculate();
         void update();
         void simulate();
+        
+        // avoidance of virtual
         Gate* getGate();
         Gate* getGate1();
         Gate* getGate2();

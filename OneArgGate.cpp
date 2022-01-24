@@ -49,6 +49,7 @@ Gate *OneArgGate::getGate2()
 
 /*Negate*/
 NeGate::NeGate(Gate *gate1p) : OneArgGate(gate1p) { name = "neg"; };
+
 bool NeGate::calculate()
 {
     return (!gate1->calculate());

@@ -22,6 +22,8 @@ public:
     void simulate();
     void reset();
     Gate *getGate();
+    
+    // avoidance of virtual
     Gate *getGate1();
     Gate *getGate2();
 };
