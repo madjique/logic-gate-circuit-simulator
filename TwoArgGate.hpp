@@ -19,6 +19,7 @@ class TwoArgGate: public LogicGate{
         TwoArgGate(Gate* gate1p,Gate* gate2p );
         void simulate();
         void reset();
+        Gate* getGate();
         Gate* getGate1();
         Gate* getGate2();
 };

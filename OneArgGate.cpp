@@ -36,6 +36,15 @@ Gate *OneArgGate::getGate()
     return gate1;
 }
 
+Gate *OneArgGate::getGate1()
+{
+    return gate1;
+}
+
+Gate *OneArgGate::getGate2()
+{
+    return gate1;
+}
 // GATES IMPLEMTATION
 
 /*Negate*/

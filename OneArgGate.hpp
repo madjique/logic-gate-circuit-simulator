@@ -21,6 +21,8 @@ class OneArgGate: public LogicGate{
         void simulate();
         void reset();
         Gate* getGate();
+        Gate* getGate1();
+        Gate* getGate2();
 } ;
 
 

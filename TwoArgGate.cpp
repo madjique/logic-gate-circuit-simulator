@@ -33,6 +33,11 @@ void TwoArgGate::reset()
     gate2->reset();
 }
 
+Gate *TwoArgGate::getGate()
+{
+    return gate1;
+}
+
 Gate *TwoArgGate::getGate1()
 {
     return gate1;
