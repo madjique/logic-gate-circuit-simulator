@@ -11,18 +11,19 @@
 
 using namespace std;
 
-class InputGate : public Gate{
-    public : 
-        InputGate(string namep);
-        void setValue(bool valuep);
-        bool calculate();
-        void update();
-        void simulate();
-        
-        // avoidance of virtual
-        Gate* getGate();
-        Gate* getGate1();
-        Gate* getGate2();
+class InputGate : public Gate
+{
+public:
+    InputGate(string namep);
+    void setValue(bool valuep);
+    bool calculate();
+    void update();
+    void simulate(int positionY, int positionX);
+
+    // avoidance of virtual
+    Gate *getGate();
+    Gate *getGate1();
+    Gate *getGate2();
 };
 
 #endif

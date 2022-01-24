@@ -19,7 +19,7 @@ public:
     OutputGate(Gate *gate1p, string nom);
     bool calculate();
     void update();
-    void simulate();
+    void simulate(int positionY, int positionX);
     void reset();
     Gate *getGate();
     

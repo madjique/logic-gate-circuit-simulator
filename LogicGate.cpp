@@ -10,4 +10,4 @@
 
 using namespace std;
 
-LogicGate::LogicGate(int type):Gate(type){};
+LogicGate::LogicGate(int type) : Gate(type){};

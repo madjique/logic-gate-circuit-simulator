@@ -7,24 +7,29 @@
 
 using namespace std;
 
-Gate::Gate(){}
+Gate::Gate() {}
 
-Gate::Gate(int typep){ 
-    type = typep ;
+Gate::Gate(int typep)
+{
+    type = typep;
 }
 
-string Gate::getName(){
-    return name ;
+string Gate::getName()
+{
+    return name;
 }
 
-int Gate::getType(){
-    return type ;
+int Gate::getType()
+{
+    return type;
 }
 
-void Gate::reset(){
+void Gate::reset()
+{
     value = 0;
 }
 
-bool Gate::getValue(){
-    return value ;
+bool Gate::getValue()
+{
+    return value;
 }

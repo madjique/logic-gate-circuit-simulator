@@ -24,10 +24,10 @@ void OutputGate::update()
     value = gate->getValue();
 }
 
-void OutputGate::simulate()
+void OutputGate::simulate(int positionY, int positionX)
 {
     gate->update();
-    gate->simulate();
+    gate->simulate(positionY, positionX);
     //DrawSimulation(this);
 }
 

@@ -9,34 +9,41 @@
 
 using namespace std;
 
-InputGate::InputGate(string namep):Gate(1){
-    name = namep ;
-} ;
+InputGate::InputGate(string namep) : Gate(1)
+{
+    name = namep;
+};
 
-void InputGate::setValue(bool valuep){
-    value = valuep ;
-} ;
+void InputGate::setValue(bool valuep)
+{
+    value = valuep;
+};
 
-bool InputGate::calculate(){
+bool InputGate::calculate()
+{
     return value;
-} ;
+};
 
 void InputGate::update(){
-    
-} ;
 
-void InputGate::simulate(){
-    Utils::DrawSimulation(this);
-} ;
+};
 
-Gate* InputGate::getGate() {
-    return this ;
-} ;
+void InputGate::simulate(int positionY, int positionX)
+{
+    Utils::DrawSimulation(this, positionY, positionX);
+};
 
-Gate* InputGate::getGate1() {
-    return this ;
-} ;
+Gate *InputGate::getGate()
+{
+    return this;
+};
 
-Gate* InputGate::getGate2() {
-    return this ;
-} ;
+Gate *InputGate::getGate1()
+{
+    return this;
+};
+
+Gate *InputGate::getGate2()
+{
+    return this;
+};
