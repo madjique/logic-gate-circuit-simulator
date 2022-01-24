@@ -18,6 +18,8 @@ public:
     TwoArgGate(Gate *gate1p, Gate *gate2p);
     void simulate(int positionY, int positionX);
     void reset();
+    virtual bool calculate() = 0;
+    virtual void update() = 0;
     Gate *getGate();
     Gate *getGate1();
     Gate *getGate2();

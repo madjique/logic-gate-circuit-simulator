@@ -16,9 +16,10 @@ public:
     LogicGate(int type);
     virtual bool calculate() = 0;
     virtual void update() = 0;
-    virtual Gate *getGate();
-    virtual Gate *getGate1();
-    virtual Gate *getGate2();
+    virtual void simulate(int positionY, int positionX) = 0;
+    virtual Gate *getGate() = 0;
+    virtual Gate *getGate1() = 0;
+    virtual Gate *getGate2() = 0;
 };
 
 #endif
