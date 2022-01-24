@@ -4,7 +4,7 @@
 #include <vector>
 #include <bits/stdc++.h>
 
-#include "Gate.hpp"
+#include "LogicGate.hpp"
 #include "OneArgGate.hpp"
 #include "Utils.hpp"
 

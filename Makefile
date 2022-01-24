@@ -3,7 +3,7 @@ CFLAGS= -Wall
 
 all : exec
 
-exec : main.o Gate.o InputGate.o OutputGate.o  LogicGate.o OneArgGate.o TwoArgGate.o Utils.o
+exec : main.o Gate.o InputGate.o OutputGate.o LogicGate.o OneArgGate.o TwoArgGate.o Utils.o
 	$(CPP) $(CFLAGS) -o $@ $^
 
 main.o : main.cpp 

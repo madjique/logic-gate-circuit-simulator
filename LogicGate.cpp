@@ -4,9 +4,8 @@
 #include <vector>
 #include <bits/stdc++.h>
 
-#include "Gate.hpp"
 #include "LogicGate.hpp"
-#include "Utils.hpp"
+#include "Gate.hpp"
 
 using namespace std;
 

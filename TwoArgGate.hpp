@@ -7,9 +7,6 @@
 #include <vector>
 #include <bits/stdc++.h>
 
-#include "Gate.hpp"
-#include "Utils.hpp"
-
 #include "LogicGate.hpp"
 
 class TwoArgGate : public LogicGate

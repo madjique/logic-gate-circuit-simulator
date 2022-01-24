@@ -7,11 +7,9 @@
 #include <vector>
 #include <bits/stdc++.h>
 
-#include "Gate.hpp"
-#include "Utils.hpp"
-
 using namespace std;
 
+#include "Gate.hpp"
 class LogicGate : public Gate
 {
 public:
