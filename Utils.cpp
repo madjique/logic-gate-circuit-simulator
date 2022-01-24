@@ -27,16 +27,49 @@ string Utils::toUpper(string data)
 
 void Utils::SimulationWait()
 {
-    string cmd;
-    cout << "type anything to continue the simulation" << endl;
-    cin >> cmd;
+    move(0, 0);
+    printw("type anything to continue the simulation");
+    getch();
 }
 
-// TODO : SHOW the state with the currect value from the sub tree that Gate comes from
-void Utils::DrawSimulation(Gate *gate)
+void Utils::DrawSimulation(Gate *gate, int positionY, int positionX)
 {
     SimulationWait();
-    cout << "Drawing" << endl;
+    if (gate->getType() == 3)
+    {
+        move(positionY, positionX - 2);
+        printw("|");
+        move(positionY, positionX + 1);
+        printw("|");
+
+        move(positionY + 1, positionX - 1);
+        printw(Utils::toUpper(gate->getName()).data());
+
+        move(positionY + 2, positionX);
+        printw("|");
+        move(positionY + 3, positionX);
+        printw(gate->getValue() ? "1" : "0");
+    }
+    else if (gate->getType() == 2)
+    {
+        move(positionY, positionX);
+        printw("|");
+        move(positionY + 1, positionX);
+        printw(Utils::toUpper(gate->getName()).data());
+        move(positionY + 2, positionX);
+        printw("|");
+        move(positionY + 3, positionX);
+        printw(gate->getValue() ? "1" : "0");
+    }
+    else if (gate->getType() == 1)
+    {
+        move(positionY, positionX);
+        printw(Utils::toUpper(gate->getName()).data());
+        move(positionY + 1, positionX);
+        printw("|");
+        move(positionY + 2, positionX);
+        printw(gate->getValue() ? "1" : "0");
+    }
 }
 
 void Utils::Draw(Gate *gate, int positionY, int positionX)
@@ -47,10 +80,10 @@ void Utils::Draw(Gate *gate, int positionY, int positionX)
         gate->getGate()->update();
         move(positionY, positionX);
         // printw(gate->getName().data());
-        printw(gate->getGate()->getValue() ? "++" : "**");
+        printw(gate->getGate()->getValue() ? "1" : "0");
         move(positionY - 1, positionX);
         printw("|");
-        move(positionY - 2, positionX - 1);
+        move(positionY - 2, positionX - 2);
         printw(Utils::toUpper(gate->getGate()->getName()).data());
     }
     else if (gate->getType() == 3)
@@ -77,17 +110,17 @@ void Utils::Draw(Gate *gate, int positionY, int positionX)
             Utils::Draw(gate->getGate2(), positionY - 3, positionX + 2);
         }
 
-        move(positionY, positionX - 1);
+        move(positionY, positionX - 2);
         printw("|");
-        move(positionY, positionX + 1);
+        move(positionY, positionX + 2);
         printw("|");
 
         move(positionY - 1, positionX - 2);
         gate->getGate1()->update();
-        printw(gate->getGate1()->getValue() ? "++" : "**");
+        printw(gate->getGate1()->getValue() ? "1" : "0");
         gate->getGate2()->update();
-        move(positionY - 1, positionX + 1);
-        printw(gate->getGate2()->getValue() ? "++" : "**");
+        move(positionY - 1, positionX + 2);
+        printw(gate->getGate2()->getValue() ? "1" : "0");
 
         move(positionY - 2, positionX - 2);
         printw("|");
@@ -100,7 +133,7 @@ void Utils::Draw(Gate *gate, int positionY, int positionX)
         printw("|");
         move(positionY - 1, positionX);
         gate->getGate1()->update();
-        printw(gate->getGate1()->getValue() ? "++" : "**");
+        printw(gate->getGate1()->getValue() ? "1" : "0");
         move(positionY - 2, positionX);
         printw("|");
         move(positionY - 3, positionX);
@@ -111,6 +144,7 @@ void Utils::Draw(Gate *gate, int positionY, int positionX)
         move(positionY, positionX);
         printw(Utils::toUpper(gate->getName()).data());
     }
+    move(0, 0);
 }
 
 string Utils::GateToText(Gate *gate)
@@ -240,21 +274,9 @@ Gate *Utils::TextToGate(string expression)
     }
 }
 
-void Utils::Simulation(OutputGate *gate)
+void Utils::Simulation(OutputGate *gate, int positionY, int positionX)
 {
-    string cmd;
-    while (true)
-    {
-        cout << "type anything to start the simulation" << endl;
-        cout << "type 'stop' to end the simulation" << endl;
-        cin >> cmd;
-        if (cmd == "stop")
-            break;
-        else
-        {
-            gate->simulate();
-        }
-    }
+    gate->simulate(positionY, positionX);
 }
 
 void Utils::TextToFile(string expression)

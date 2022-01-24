@@ -21,17 +21,42 @@ LogicGate::LogicGate(Gate *gate1p) : Gate(2)
     gate1 = gate1p;
 }
 
-void LogicGate::simulate()
+void LogicGate::simulate(int positionY, int positionX)
 {
-    gate1->update();
-    gate1->simulate();
     if (type == 3)
     {
+        if (gate1->getType() == 1)
+        {
+            gate1->simulate(positionY - 3, positionX - 2);
+        }
+        else
+        {
+            gate1->simulate(positionY - 4, positionX - 3);
+        }
+        gate1->update();
+        if (gate2->getType() == 1)
+        {
+            gate2->simulate(positionY - 3, positionX + 2);
+        }
+        else
+        {
+            gate2->simulate(positionY - 4, positionX + 3);
+        }
         gate2->update();
-        gate2->simulate();
     }
+    else if (type == 2)
+    {
+        gate1->update();
+        gate1->simulate(positionY - 3, positionX);
+    }
+    else if (type == 1)
+    {
+        gate1->update();
+        gate1->simulate(positionY - 2, positionX);
+    }
+
     update();
-    Utils::DrawSimulation(this);
+    Utils::DrawSimulation(this, positionY, positionX);
 }
 
 void LogicGate::reset()

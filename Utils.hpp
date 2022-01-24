@@ -19,7 +19,7 @@ public:
     static map<string, InputGate *> inputGates;
 
     static void SimulationWait();
-    static void DrawSimulation(Gate *gate);
+    static void DrawSimulation(Gate *gate, int positionY, int positionX);
     static void Draw(Gate *gate, int positionY, int positionX);
     static string GateToText(Gate *gate);
     static string getGateNameFromText(string s);
@@ -28,7 +28,7 @@ public:
     static Gate *getLogicGate(string str, Gate *gate1, Gate *gate2);
     static InputGate *getInputInstance(string letter);
     static Gate *TextToGate(string expression);
-    static void Simulation(OutputGate *gate);
+    static void Simulation(OutputGate *gate, int positionY, int positionX);
     static void TextToFile(string expression);
     static string FileToText(string filename);
     static string toUpper(string data);
