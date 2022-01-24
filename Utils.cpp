@@ -11,6 +11,8 @@
 #include "InputGate.hpp"
 #include "OutputGate.hpp"
 #include "LogicGate.hpp"
+#include "OneArgGate.hpp"
+#include "TwoArgGate.hpp"
 
 using namespace std;
 
