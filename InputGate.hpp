@@ -19,6 +19,8 @@ public:
     bool calculate();
     void update();
     void simulate(int positionY, int positionX);
+
+    // avoidance of virtual
     Gate *getGate();
     Gate *getGate1();
     Gate *getGate2();
