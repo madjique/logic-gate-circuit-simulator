@@ -10,6 +10,8 @@
 #include "InputGate.hpp"
 #include "OutputGate.hpp"
 #include "LogicGate.hpp"
+#include "TwoArgGate.hpp"
+#include "OneArgGate.hpp"
 
 using namespace std;
 

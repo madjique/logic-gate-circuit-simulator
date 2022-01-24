@@ -16,14 +16,30 @@ TwoArgGate::TwoArgGate(Gate *gate1p, Gate *gate2p) : LogicGate(3)
     gate2 = gate2p;
 }
 
-void TwoArgGate::simulate()
+void TwoArgGate::simulate(int positionY, int positionX)
 {
+
+    if (gate1->getType() == 1)
+    {
+        gate1->simulate(positionY - 3, positionX - 2);
+    }
+    else
+    {
+        gate1->simulate(positionY - 4, positionX - 3);
+    }
     gate1->update();
-    gate1->simulate();
+    if (gate2->getType() == 1)
+    {
+        gate2->simulate(positionY - 3, positionX + 2);
+    }
+    else
+    {
+        gate2->simulate(positionY - 4, positionX + 3);
+    }
     gate2->update();
-    gate2->simulate();
+
     update();
-    Utils::DrawSimulation(this);
+    Utils::DrawSimulation(this, positionY, positionX);
 }
 
 void TwoArgGate::reset()

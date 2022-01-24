@@ -15,21 +15,19 @@ OneArgGate::OneArgGate(Gate *gate1p) : LogicGate(2)
     gate1 = gate1p;
 }
 
-void OneArgGate::simulate()
+void OneArgGate::simulate(int positionY, int positionX)
 {
     gate1->update();
-    gate1->simulate();
+    gate1->simulate(positionY - 3, positionX);
     update();
-    Utils::DrawSimulation(this);
+    Utils::DrawSimulation(this, positionY, positionX);
 }
-
 
 void OneArgGate::reset()
 {
     value = 0;
     gate1->reset();
 }
-
 
 Gate *OneArgGate::getGate()
 {
