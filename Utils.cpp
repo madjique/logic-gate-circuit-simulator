@@ -303,3 +303,66 @@ string Utils::FileToText(string filename)
         cout << "Impossible d'ouvrir le fichier";
     return line;
 }
+
+void Utils::Demo()
+{
+    system("clear");
+
+    string choix;
+    string fileName;
+    string expression;
+    cout << "Tapez Oui si voulez vous charger une expression depuis un fichier, sinon Ecrire non" << endl;
+    cin >> choix;
+    if (choix == "Oui")
+    {
+        cout << "Entrer le nom du fichier" << endl;
+        cin >> fileName;
+        expression = Utils::FileToText(fileName);
+    }
+    else
+    {
+        cout << "Veuillez Ecrire l'expression" << endl;
+        cin >> expression;
+        cout << "Tapez Oui si voulez sauvgarder cette expression dans un fichier" << endl;
+        cin >> choix;
+        if (choix == "Oui")
+        {
+            Utils::TextToFile(expression);
+        }
+    }
+
+    OutputGate *A = new OutputGate(TextToGate(expression), "OUTPUT");
+
+    for (auto const &[key, gate] : Utils::inputGates)
+    {
+        string value;
+        cout << "Entrez la valeur de " << key << endl;
+        cin >> value;
+        gate->setValue(value == "true" ? true : false);
+    }
+
+    string choix_finale;
+    cout << "Voulez vous afficher le circuit directement ou executer la simulation?" << endl;
+    cin >> choix_finale;
+
+    initscr();
+    noecho();
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+    int INITIAL_X = xMax / 2;
+    int INITIAL_Y = yMax / 2;
+
+    if (choix_finale == "simulation")
+    {
+        Utils::Simulation(A, INITIAL_Y, INITIAL_X);
+    }
+    else
+    {
+        Utils::Draw(A, INITIAL_Y, INITIAL_X);
+    }
+
+    refresh();
+    move(0, 0);
+    getch();
+    endwin();
+}

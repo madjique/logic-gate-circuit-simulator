@@ -17,12 +17,7 @@ using namespace std;
 
 int main()
 {
-    initscr();
-
-    int yMax, xMax;
-    getmaxyx(stdscr, yMax, xMax);
-    int INITIAL_X = xMax / 2;
-    int INITIAL_Y = yMax / 2;
+    Utils::Demo();
 
     //  Exemple de sujet
     InputGate *a = new InputGate("a");
@@ -40,13 +35,10 @@ int main()
     d->setValue(false);
     // A->calculate();
     string text = Utils::GateToText(A);
-    printw(text.data());
+    // printw(text.data());
     // printw(Utils::GateToText(Utils::TextToGate(text)).data());
-    refresh();
     // Utils::Draw(A, INITIAL_Y, INITIAL_X);
-    refresh();
-
-    Utils::Simulation(A, INITIAL_Y, INITIAL_X);
+    // Utils::Simulation(A, INITIAL_Y, INITIAL_X);
     // clear cache of input Instances
     Utils::inputGates.clear();
 
@@ -61,7 +53,6 @@ int main()
     // OutputGate Aout( &orgate );
     // cout << GateToText(Aout) << endl ;
     // cout << Aout.calculate() << endl ;
-    getch();
-    endwin();
+
     return 0;
 }

@@ -34,6 +34,7 @@ public:
     static void TextToFile(string expression);
     static string FileToText(string filename);
     static string toUpper(string data);
+    static void Demo();
 };
 
 #endif /* UTILS */
