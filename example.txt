@@ -1,1 +1,1 @@
-xor(or(neg(a),b),and(a,b))
+xor(xor(or(a,b),nand(c,d)),or(or(e,f),or(g,h)))
